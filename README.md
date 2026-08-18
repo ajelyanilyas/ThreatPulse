@@ -5,9 +5,18 @@
 **A live, self-updating threat intelligence platform.**
 
 Auto-ingests real malware feeds every hour, tracks indicators over time, and serves a
-public dashboard of today's active threats — a miniature, open-source OpenCTI/MISP.
+dashboard of today's active threats — a miniature, open-source OpenCTI/MISP.
 
-[Live Demo](#) · [API Docs](#-api) · [Deploy your own](#-deploy-to-render-free)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-D71F00)
+![License](https://img.shields.io/badge/License-MIT-000000)
+
+[Features](#what-it-does) · [API](#-api) · [Run locally](#run-locally) · [Deploy your own](#-deploy-to-render-free)
+
+<br/>
+
+![ThreatPulse dashboard](docs/banner.svg)
 
 </div>
 

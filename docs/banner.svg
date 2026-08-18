@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" font-family="Inter, -apple-system, Segoe UI, Roboto, sans-serif">
+  <!-- page -->
+  <rect width="1200" height="470" rx="18" fill="#f4f5f7"/>
+
+  <!-- header -->
+  <circle cx="42" cy="46" r="7" fill="#16181d"/>
+  <text x="60" y="53" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#16181d">Threat<tspan fill="#5b626e">Pulse</tspan></text>
+  <text x="243" y="52" font-size="14" fill="#9aa1ad">live threat intelligence, self-updating hourly</text>
+  <g transform="translate(1060,38)">
+    <circle cx="0" cy="8" r="5" fill="#5b626e"/>
+    <text x="12" y="13" font-size="13" font-weight="700" fill="#5b626e">LIVE</text>
+    <text x="60" y="13" font-size="13" fill="#9aa1ad">updated 1m ago</text>
+  </g>
+
+  <!-- stat cards -->
+  <g transform="translate(40,86)">
+    <!-- Total (black) -->
+    <rect x="0" y="0" width="270" height="118" rx="14" fill="#ffffff" stroke="#dfe3e8"/>
+    <text x="22" y="34" font-size="12" font-weight="700" letter-spacing="1" fill="#5b626e">TOTAL IOCS</text>
+    <text x="22" y="80" font-size="40" font-weight="800" letter-spacing="-1" fill="#16181d">5,005</text>
+    <text x="22" y="103" font-size="12" fill="#9aa1ad">tracked across all feeds</text>
+
+    <!-- New today (red) -->
+    <rect x="286" y="0" width="270" height="118" rx="14" fill="#ffffff" stroke="#dfe3e8"/>
+    <text x="308" y="34" font-size="12" font-weight="700" letter-spacing="1" fill="#5b626e">NEW TODAY</text>
+    <text x="308" y="80" font-size="40" font-weight="800" letter-spacing="-1" fill="#e5484d">5,005</text>
+    <text x="308" y="103" font-size="12" fill="#9aa1ad">first seen since midnight UTC</text>
+
+    <!-- Families (amber) -->
+    <rect x="572" y="0" width="270" height="118" rx="14" fill="#ffffff" stroke="#dfe3e8"/>
+    <text x="594" y="34" font-size="12" font-weight="700" letter-spacing="1" fill="#5b626e">MALWARE FAMILIES</text>
+    <text x="594" y="80" font-size="40" font-weight="800" letter-spacing="-1" fill="#e08600">79</text>
+    <text x="594" y="103" font-size="12" fill="#9aa1ad">distinct families observed</text>
+
+    <!-- Feeds (purple) -->
+    <rect x="858" y="0" width="262" height="118" rx="14" fill="#ffffff" stroke="#dfe3e8"/>
+    <text x="880" y="34" font-size="12" font-weight="700" letter-spacing="1" fill="#5b626e">ACTIVE FEEDS</text>
+    <text x="880" y="80" font-size="40" font-weight="800" letter-spacing="-1" fill="#7c5cff">3</text>
+    <text x="880" y="103" font-size="12" fill="#9aa1ad">ingesting on schedule</text>
+  </g>
+
+  <!-- trend card -->
+  <g transform="translate(40,224)">
+    <rect x="0" y="0" width="740" height="206" rx="14" fill="#ffffff" stroke="#dfe3e8"/>
+    <text x="22" y="34" font-size="14" font-weight="700" fill="#16181d">New Indicators — 14 Day Trend</text>
+    <text x="718" y="34" font-size="12" text-anchor="end" fill="#9aa1ad">first-seen per day</text>
+    <!-- gridlines -->
+    <g stroke="#eceef1">
+      <line x1="22" y1="70" x2="718" y2="70"/>
+      <line x1="22" y1="110" x2="718" y2="110"/>
+      <line x1="22" y1="150" x2="718" y2="150"/>
+    </g>
+    <!-- area + line (blue = data) -->
+    <path d="M22,150 L82,132 L142,140 L202,110 L262,120 L322,92 L382,104 L442,78 L502,96 L562,66 L622,84 L682,58 L718,72 L718,182 L22,182 Z" fill="#2f6feb" fill-opacity="0.12"/>
+    <path d="M22,150 L82,132 L142,140 L202,110 L262,120 L322,92 L382,104 L442,78 L502,96 L562,66 L622,84 L682,58 L718,72" fill="none" stroke="#2f6feb" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+
+  <!-- types card -->
+  <g transform="translate(796,224)">
+    <rect x="0" y="0" width="324" height="206" rx="14" fill="#ffffff" stroke="#dfe3e8"/>
+    <text x="22" y="34" font-size="14" font-weight="700" fill="#16181d">Indicator Types</text>
+    <!-- doughnut (data keeps color) -->
+    <g transform="translate(96,124)">
+      <circle r="52" fill="none" stroke="#2f6feb" stroke-width="22" stroke-dasharray="250 77" transform="rotate(-90)"/>
+      <circle r="52" fill="none" stroke="#e5484d" stroke-width="22" stroke-dasharray="16 311" stroke-dashoffset="-250" transform="rotate(-90)"/>
+      <circle r="41" fill="#ffffff"/>
+    </g>
+    <g font-size="13" fill="#5b626e">
+      <rect x="200" y="86" width="12" height="12" rx="3" fill="#2f6feb"/><text x="220" y="96">url</text>
+      <rect x="200" y="112" width="12" height="12" rx="3" fill="#e5484d"/><text x="220" y="122">ip</text>
+      <rect x="200" y="138" width="12" height="12" rx="3" fill="#7c5cff"/><text x="220" y="148">domain</text>
+      <rect x="200" y="164" width="12" height="12" rx="3" fill="#e08600"/><text x="220" y="174">hash</text>
+    </g>
+  </g>
+</svg>
