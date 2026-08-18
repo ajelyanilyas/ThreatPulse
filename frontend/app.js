@@ -57,21 +57,23 @@ document.querySelectorAll(".tab").forEach((tab) => {
 
 // ---------- Charts (Chart.js) ----------
 let trendChart, typeChart;
-const AXIS = "#5c6f8c";
-const GRID = "rgba(34,48,74,0.5)";
-const TYPE_COLORS = { url: "#35a0ff", ip: "#ff4d6d", domain: "#7c6bff", md5: "#ffb020", sha256: "#ffb020", sha1: "#ffb020" };
+const AXIS = "#5b626e";
+const GRID = "#eceef1";
+const LINE = "#2f6feb";
+// Chart data is numeric, so it keeps color. Palette matches the stat numbers.
+const TYPE_COLORS = { url: "#2f6feb", ip: "#e5484d", domain: "#7c5cff", md5: "#e08600", sha256: "#e08600", sha1: "#e08600" };
 
 function renderTrend(trend) {
   const ctx = $("trend-chart");
   const labels = trend.map((t) => t.date.slice(5));
   const data = trend.map((t) => t.count);
   const g = ctx.getContext("2d").createLinearGradient(0, 0, 0, 240);
-  g.addColorStop(0, "rgba(55,226,198,0.35)");
-  g.addColorStop(1, "rgba(55,226,198,0)");
+  g.addColorStop(0, "rgba(47,111,235,0.20)");
+  g.addColorStop(1, "rgba(47,111,235,0)");
   if (trendChart) trendChart.destroy();
   trendChart = new Chart(ctx, {
     type: "line",
-    data: { labels, datasets: [{ data, borderColor: "#37e2c6", backgroundColor: g, fill: true, tension: 0.35, pointRadius: 2, pointHoverRadius: 5, borderWidth: 2 }] },
+    data: { labels, datasets: [{ data, borderColor: LINE, backgroundColor: g, fill: true, tension: 0.35, pointRadius: 2, pointHoverRadius: 5, borderWidth: 2 }] },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
@@ -90,11 +92,11 @@ function renderTypes(byType) {
     type: "doughnut",
     data: {
       labels: byType.map((t) => t.name),
-      datasets: [{ data: byType.map((t) => t.count), backgroundColor: byType.map((t) => TYPE_COLORS[t.name] || "#8ba0bf"), borderColor: "#111726", borderWidth: 2 }],
+      datasets: [{ data: byType.map((t) => t.count), backgroundColor: byType.map((t) => TYPE_COLORS[t.name] || "#9aa1ad"), borderColor: "#ffffff", borderWidth: 2 }],
     },
     options: {
       responsive: true, maintainAspectRatio: false, cutout: "62%",
-      plugins: { legend: { position: "right", labels: { color: "#8ba0bf", boxWidth: 12, padding: 12, font: { size: 12 } } } },
+      plugins: { legend: { position: "right", labels: { color: "#5b626e", boxWidth: 12, padding: 12, font: { size: 12 } } } },
     },
   });
 }
@@ -197,7 +199,7 @@ async function runEnrich() {
           <span class="verdict-badge v-${cls}">${cls}</span>
           <div><div class="mono" style="font-size:15px">${escapeHtml(v.indicator)}</div>
             <div style="color:var(--text-faint);font-size:12px;margin-top:2px">detected type: ${v.ioc_type}</div></div>
-          <div class="score-ring"><div class="n" style="color:${cls === "malicious" ? "var(--danger)" : cls === "suspicious" ? "var(--warn)" : "var(--ok)"}">${v.score}</div><div class="l">threat score</div></div>
+          <div class="score-ring"><div class="n" style="color:${cls === "malicious" ? "var(--num-red)" : cls === "suspicious" ? "var(--num-amber)" : "var(--num-green)"}">${v.score}</div><div class="l">threat score</div></div>
         </div>
         <div class="verdict-meta">
           <span>First seen: <b>${v.first_seen ? parseUTC(v.first_seen).toLocaleString() : "not in feeds"}</b></span>
