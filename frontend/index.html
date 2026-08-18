@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ThreatPulse — Live Threat Intelligence</title>
+  <meta name="description" content="A live, self-updating threat intelligence platform ingesting real malware feeds every hour." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%2337e2c6'/></svg>" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo"><span class="pulse"></span> Threat<span class="accent">Pulse</span></div>
+      <span class="tagline">live threat intelligence, self-updating hourly</span>
+      <div class="header-status">
+        <span><span class="live-dot"></span> LIVE</span>
+        <span id="last-updated">—</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="tabs">
+      <button class="tab active" data-panel="dashboard">Dashboard</button>
+      <button class="tab" data-panel="explorer">IOC Explorer</button>
+      <button class="tab" data-panel="enrich">Enrichment</button>
+      <button class="tab" data-panel="watchlist">Watchlist</button>
+    </nav>
+
+    <!-- ============ DASHBOARD ============ -->
+    <section class="panel active" id="dashboard">
+      <div class="cards" id="stat-cards">
+        <div class="card"><div class="label">Total IOCs</div><div class="value" id="c-total">—</div><div class="sub">tracked across all feeds</div></div>
+        <div class="card danger"><div class="label">New Today</div><div class="value" id="c-new">—</div><div class="sub">first seen since midnight UTC</div></div>
+        <div class="card warn"><div class="label">Malware Families</div><div class="value" id="c-fam">—</div><div class="sub">distinct families observed</div></div>
+        <div class="card purple"><div class="label">Active Feeds</div><div class="value" id="c-feeds">—</div><div class="sub">ingesting on schedule</div></div>
+      </div>
+
+      <div class="grid two" style="margin-bottom:16px">
+        <div class="box">
+          <h3>New Indicators — 14 Day Trend <span class="hint">first-seen per day</span></h3>
+          <div class="chart-holder"><canvas id="trend-chart"></canvas></div>
+        </div>
+        <div class="box">
+          <h3>Indicator Types</h3>
+          <div class="chart-holder"><canvas id="type-chart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div class="box">
+          <h3>Top Malware Families <span class="hint">by indicator count</span></h3>
+          <div class="barlist" id="families-list"><div class="loading">loading…</div></div>
+        </div>
+        <div class="box">
+          <h3>Geographic Distribution <span class="hint">malicious IPs by country</span></h3>
+          <div class="barlist" id="geo-list"><div class="loading">loading…</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IOC EXPLORER ============ -->
+    <section class="panel" id="explorer">
+      <div class="toolbar">
+        <input class="search" id="search" placeholder="Search value, malware family, or tag…" />
+        <select id="filter-type">
+          <option value="">All types</option>
+          <option value="url">URL</option>
+          <option value="ip">IP</option>
+          <option value="domain">Domain</option>
+          <option value="md5">MD5</option>
+          <option value="sha256">SHA256</option>
+        </select>
+        <select id="filter-source">
+          <option value="">All feeds</option>
+          <option value="urlhaus">URLhaus</option>
+          <option value="threatfox">ThreatFox</option>
+          <option value="feodo">Feodo</option>
+        </select>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Indicator</th><th>Type</th><th>Family</th><th>Feed</th><th>Country</th><th>First Seen</th><th>Last Seen</th>
+          </tr></thead>
+          <tbody id="ioc-tbody"><tr><td colspan="7" class="loading">loading…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <button class="btn ghost" id="prev-page">← Prev</button>
+        <span id="page-info">—</span>
+        <button class="btn ghost" id="next-page">Next →</button>
+      </div>
+    </section>
+
+    <!-- ============ ENRICHMENT ============ -->
+    <section class="panel" id="enrich">
+      <div class="box" style="margin-bottom:20px">
+        <h3>On-Demand Enrichment <span class="hint">paste an IP, domain, URL, or hash</span></h3>
+        <div class="enrich-form">
+          <input class="search" id="enrich-input" placeholder="e.g. 45.155.204.10, evil.example.com, or a SHA256…" />
+          <button class="btn" id="enrich-btn">Analyze</button>
+        </div>
+        <div id="enrich-result"></div>
+      </div>
+    </section>
+
+    <!-- ============ WATCHLIST ============ -->
+    <section class="panel" id="watchlist">
+      <div class="box" style="margin-bottom:20px">
+        <h3>Track an Indicator <span class="hint">get notified as it reappears across feeds</span></h3>
+        <div class="enrich-form">
+          <input class="search" id="watch-input" placeholder="Indicator to watch…" />
+          <button class="btn" id="watch-btn">Add to Watchlist</button>
+        </div>
+      </div>
+      <div id="watch-list"></div>
+    </section>
+
+    <div class="footer">
+      <div>ThreatPulse ingests <a href="https://urlhaus.abuse.ch" target="_blank" rel="noopener">URLhaus</a>,
+        <a href="https://threatfox.abuse.ch" target="_blank" rel="noopener">ThreatFox</a>, and
+        <a href="https://feodotracker.abuse.ch" target="_blank" rel="noopener">Feodo Tracker</a> feeds from abuse.ch.</div>
+      <div>Built as an open threat-intelligence platform · data refreshes automatically · <a href="/docs">API docs</a></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
